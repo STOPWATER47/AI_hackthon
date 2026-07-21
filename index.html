@@ -54,14 +54,19 @@
 
   /* NAV */
   header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .nav-inner{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:66px}
   .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;font-size:1.25rem;letter-spacing:-.01em}
-  .brand .mk{width:34px;height:34px;border-radius:9px;background:var(--orange);border:2px solid var(--ink);display:grid;place-items:center;color:#fff;font-family:var(--mont);font-weight:900;font-size:.9rem;transform:rotate(-6deg)}
-  .nav-links{display:flex;align-items:center;gap:24px}
+  .brand .mk{width:48px;height:44px;display:grid;place-items:center;color:var(--orange);flex:none}
+  .brand .mk svg{width:100%;height:100%;display:block}
+  .nav-links{display:flex;align-items:center;gap:22px;justify-self:center}
+  .nav-links .lang-switch{position:absolute;right:0;top:50%;transform:translateY(-50%)}
   .nav-links a{font-size:.93rem;font-weight:700;color:var(--ink);transition:color .15s}
   .nav-links a:hover{color:var(--orange)}
-  .lang-btn{font-family:var(--mont);border:2px solid var(--ink);background:#fff;border-radius:999px;padding:6px 13px;font-weight:800;font-size:.8rem;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:6px;transition:.12s}
-  .lang-btn:hover{background:var(--orange);color:#fff}
+  .lang-switch{display:inline-grid;grid-template-columns:repeat(3,1fr);align-items:stretch;border:2px solid var(--ink);border-radius:999px;overflow:hidden;font-family:var(--mont)}
+  .lang-switch button{background:transparent;border:none;font-family:inherit;font-weight:800;font-size:.74rem;padding:7px 9px;cursor:pointer;color:var(--ink);transition:.12s;white-space:nowrap;line-height:1.2;text-align:center}
+  .lang-switch button + button{border-left:2px solid var(--ink)}
+  .lang-switch button:hover{background:var(--orange);color:#fff}
+  .lang-switch button.on{background:var(--orange);color:#fff}
   .menu-toggle{display:none;background:none;border:none;font-size:1.7rem;cursor:pointer;color:var(--ink)}
 
   /* Buttons */
@@ -109,7 +114,6 @@
   .ico .hi{width:36px;height:36px;color:var(--orange)}
   .chip .hi{width:17px;height:17px;color:var(--deep);margin-right:6px;vertical-align:-3px}
   .award .m .hi{width:38px;height:38px;color:var(--orange)}
-  .lang-btn .hi{width:16px;height:16px}
   .reg-benefits li b .hi{width:15px;height:15px;color:var(--deep)}
   .btn .hi{width:19px;height:19px;margin-left:2px}
   .toast .hi{width:20px;height:20px;color:#fff;vertical-align:-4px;margin-right:6px}
@@ -267,8 +271,11 @@
   header.nav{background:rgba(13,13,13,.9);border-bottom:1px solid #262626}
   .brand{color:#fff}
   .nav-links a{color:#e7e2d8}
-  .lang-btn{background:transparent;border-color:#3a3a3a;color:#fff}
-  .lang-btn:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+  .lang-switch{border-color:#3a3a3a}
+  .lang-switch button{color:#c8c2b8}
+  .lang-switch button + button{border-left-color:#3a3a3a}
+  .lang-switch button:hover{background:rgba(255,107,26,.28);color:#fff}
+  .lang-switch button.on{background:var(--orange);color:#fff}
   .menu-toggle{color:#fff}
   .eyebrow{background:none;border:none;border-radius:0;padding:0;font-family:var(--mono);color:var(--deep);letter-spacing:.16em;font-weight:700;font-size:.76rem;text-transform:uppercase;gap:8px}
   .eyebrow::before{content:"\25A0";color:var(--orange);font-size:.66rem}
@@ -300,7 +307,9 @@
     .nav-links{position:fixed;top:66px;right:0;left:0;background:#0d0d0d;flex-direction:column;align-items:flex-start;gap:0;padding:8px 24px 20px;border-bottom:2px solid var(--ink);display:none}
     .nav-links.open{display:flex}
     .nav-links a{padding:13px 0;width:100%;border-bottom:1.5px solid #262626}
-    .nav-links .lang-btn{margin-top:12px}
+    .nav-inner{display:flex;justify-content:space-between}
+    .nav-links{justify-content:flex-start;justify-self:auto}
+    .nav-links .lang-switch{position:static;transform:none;margin-top:12px}
     .menu-toggle{display:block}
     .hero .wrap{grid-template-columns:1fr}
     .doodle{max-width:420px;margin:0 auto}
@@ -318,15 +327,19 @@
 <!-- NAV -->
 <header class="nav">
   <div class="wrap nav-inner">
-    <a href="#home" class="brand"><span class="mk">AI</span><span>Bridge</span></a>
+    <a href="#home" class="brand"><span class="mk"><svg viewBox="0 0 40 36" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path transform="rotate(20 20 17.5)" d="M21.5 19V16.5H18.5V21H24.5V11.5H15.5V23.5H24.5"/><path d="M16.5 26.3h7M17.3 29.3h5.4M18.2 32.3h3.6"/></g><g fill="currentColor"><path d="M20 7L18.4 2.5L21.6 2.5Z"/><path d="M26.1 9.2L30.2 6.8L27.8 4.8Z"/><path d="M13.9 9.2L9.8 6.8L12.2 4.8Z"/><path d="M29.4 14.9L34.1 15.7L33.5 12.5Z"/><path d="M10.6 14.9L5.9 15.7L6.5 12.5Z"/></g></svg></span><span>AI Bridge</span></a>
     <nav class="nav-links" id="navLinks">
       <a href="#about" data-ko="소개" data-en="About">소개</a>
       <a href="#tracks" data-ko="프로젝트 주제" data-en="Tracks">프로젝트 주제</a>
       <a href="#schedule" data-ko="일정" data-en="Schedule">일정</a>
       <a href="#judging" data-ko="심사기준" data-en="Judging">심사기준</a>
-      <a href="#faq" data-ko="FAQ" data-en="FAQ">FAQ</a>
       <a href="#register" data-ko="참가신청" data-en="Register">참가신청</a>
-      <button class="lang-btn" id="langBtn"><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg> <span id="langLabel">EN</span></button>
+      <a href="#faq" data-ko="FAQ" data-en="FAQ">FAQ</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" data-lang="ko">한국어</button>
+        <button type="button" data-lang="en">English</button>
+        <button type="button" data-lang="vi">Việt</button>
+      </div>
     </nav>
     <button class="menu-toggle" id="menuToggle" aria-label="menu"><svg class="hi" style="width:26px;height:26px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
   </div>
@@ -336,7 +349,7 @@
 <section class="hero" id="home">
   <div class="wrap">
     <div>
-      <span class="eyebrow"><span data-ko="다낭, 베트남 · 2026.08.22-23" data-en="Đà Nẵng, Vietnam · 2026.08.22-23">다낭, 베트남 · 2026.08.22-23</span></span>
+      <span class="eyebrow"><span data-ko="다낭, 베트남 · 2026.08.15-16" data-en="Đà Nẵng, Vietnam · 2026.08.15-16">다낭, 베트남 · 2026.08.15-16</span></span>
       <p class="hero-sub-eyebrow" data-ko="동아대 × 제주대 WFK IT봉사단을 위한" data-en="For the builders of Dong-A × Jeju Nat'l">동아대 × 제주대 WFK IT봉사단을 위한</p>
       <p class="tagline" data-ko="48시간, 미래를 배포한다." data-en="The future, shipped in 48 hours.">48시간, 미래를 배포한다.</p>
       <h1><span class="o" data-ko="AI 브릿지" data-en="AI Bridge">AI 브릿지</span><br><span data-ko="해커톤" data-en="Hackathon">해커톤</span><span class="dot">.</span></h1>
@@ -431,10 +444,10 @@
       <p class="imagine-sub" data-ko="빈칸을 채우는 순간, 여러분의 프로젝트가 시작됩니다." data-en="The moment you fill the blank, your project begins.">빈칸을 채우는 순간, 여러분의 프로젝트가 시작됩니다.</p>
       <div class="imagine-chips">
         <span data-ko="언어 장벽" data-en="language barriers">언어 장벽</span>
-        <span data-ko="전세사기" data-en="the digital divide">전세사기 </span>
-        <span data-ko="재난 피해" data-en="disaster damage">재난 피해</span>
-        <span data-ko="교통사고" data-en="traffic accidents">교통사고</span>
-        <span data-ko="외로움" data-en="loneliness">외로움</span>
+        <span data-ko="의료공백" data-en="healthcare gaps">의료공백</span>
+        <span data-ko="지방소멸" data-en="regional decline">지방소멸</span>
+        <span data-ko="가짜뉴스" data-en="fake news">가짜뉴스</span>
+        <span data-ko="전세사기" data-en="rental deposit fraud">전세사기</span>
       </div>
     </div>
   </div>
@@ -669,6 +682,7 @@
           <li><a href="#schedule" data-ko="일정" data-en="Schedule">일정</a></li>
           <li><a href="#judging" data-ko="심사기준" data-en="Judging">심사기준</a></li>
           <li><a href="#register" data-ko="참가신청" data-en="Register">참가신청</a></li>
+          <li><a href="#faq" data-ko="FAQ" data-en="FAQ">FAQ</a></li>
         </ul>
       </div>
       <div>
@@ -718,27 +732,213 @@
 </div>
 
 <script>
-  const langBtn = document.getElementById('langBtn');
-  const langLabel = document.getElementById('langLabel');
+  const langSwitch = document.getElementById('langSwitch');
+  const LANGS = ['ko','en','vi'];
+
+  // 베트남어 사전 (키 = 한국어 원문 / 없는 항목은 영어로 자동 대체)
+  const VI = {
+    "소개":"Giới thiệu",
+    "프로젝트 주제":"Hạng mục dự án",
+    "일정":"Lịch trình",
+    "심사기준":"Tiêu chí chấm",
+    "FAQ":"FAQ",
+    "참가신청":"Đăng ký",
+    "다낭, 베트남 · 2026.08.15-16":"Đà Nẵng, Việt Nam · 2026.08.15-16",
+    "동아대 × 제주대 WFK IT봉사단을 위한":"Dành cho sinh viên Dong-A × Đội tình nguyện IT WFK Jeju",
+    "48시간, 미래를 배포한다.":"48 giờ, triển khai tương lai.",
+    "AI 브릿지":"AI Bridge",
+    "해커톤":"Hackathon",
+    "실현하기 전, 가치를 먼저 증명해 보세요. 동아대와 제주대 청년이 AI로 함께 만드는 1박 2일.":"Hãy chứng minh giá trị trước khi hiện thực hóa. 2 ngày 1 đêm nơi thanh niên Dong-A và Jeju cùng tạo nên bằng AI.",
+    "참가 신청하기 →":"Đăng ký tham gia →",
+    "주제 보기":"Xem hạng mục",
+    "01 / 04 — 참가 접수중":"01 / 04 — ĐANG NHẬN ĐĂNG KÝ",
+    "일간 집중 개발":" ngày phát triển tập trung",
+    "개 프로젝트 트랙":" hạng mục dự án",
+    "개 참가 팀":" đội tham gia",
+    "개 대학 협력":" trường đại học hợp tác",
+    "왜 ":"Vì sao ",
+    "인가요?":"?",
+    "동아대 학생과 제주대 WFK IT봉사단이 한 팀을 이뤄, AI 기술로 지역사회의 문제를 함께 해결하며 기술과 우정의 다리를 놓는 협력 해커톤입니다.":"Đây là hackathon hợp tác, nơi sinh viên Dong-A và đội tình nguyện IT WFK Jeju lập đội cùng giải quyết vấn đề cộng đồng bằng AI, bắc nhịp cầu công nghệ và tình bạn.",
+    "함께 문제를 풀다":"Cùng nhau giải quyết vấn đề",
+    "동아대 학생과 제주대 WFK IT봉사단이 한 팀을 이뤄 지역사회의 실제 문제를 AI로 해결하는 경험을 제공합니다.":"Sinh viên Dong-A và đội tình nguyện IT WFK Jeju cùng lập đội, mang đến trải nghiệm giải quyết vấn đề thực tế của cộng đồng bằng AI.",
+    "AI 실전 역량":"Năng lực AI thực chiến",
+    "생성형 AI 등 최신 도구를 활용해 아이디어를 실제 작동하는 프로토타입으로 구현하는 역량을 기릅니다.":"Rèn luyện năng lực biến ý tưởng thành nguyên mẫu hoạt động thực tế bằng các công cụ mới nhất như AI tạo sinh.",
+    "학교를 잇는 교류":"Giao lưu kết nối hai trường",
+    "동아대와 제주대 청년이 기술과 문화를 나누고, 오래도록 이어질 네트워크와 우정을 만듭니다.":"Thanh niên Dong-A và Jeju chia sẻ công nghệ và văn hóa, xây dựng mạng lưới và tình bạn lâu dài.",
+    "참가 대상":"Đối tượng tham gia",
+    "동아대 학생과 제주대 WFK IT봉사단원. AI 초심자도 환영하며, 노트북만 있으면 됩니다.":"Sinh viên ĐH Dong-A và tình nguyện viên IT WFK Jeju. Người mới với AI cũng được chào đón, chỉ cần mang laptop.",
+    "팀 구성":"Thành lập đội",
+    "팀당 4~5명, 동아대 학생과 봉사단원을 반드시 섞어 구성합니다. 교류가 곧 목적이니까요!":"Mỗi đội 4~5 người, bắt buộc trộn sinh viên Dong-A và tình nguyện viên. Vì giao lưu chính là mục đích!",
+    "지원 사항":"Hỗ trợ cung cấp",
+    "식사·다과, Wi-Fi, 개발 공간, 그리고 IT봉사단·현지 교수진의 멘토링을 제공합니다.":"Cung cấp bữa ăn, đồ ăn nhẹ, Wi-Fi, không gian làm việc và mentoring từ đội tình nguyện IT cùng giảng viên bản địa.",
+    "개의 트랙, 자유로운 도전":" hạng mục, thử thách tự do",
+    "주제는 자유입니다. 아래 4개 트랙은 여러분의 아이디어에 방향을 더해줄 가이드예요. 'AI'만 담겨 있다면 무엇이든 좋습니다!":"Chủ đề hoàn toàn tự do. 4 hạng mục dưới đây là hướng dẫn giúp định hướng ý tưởng. Chỉ cần có 'AI' là được!",
+    "지역 현장 문제 해결 · Local Impact AI":"Giải quyết vấn đề địa phương · Local Impact AI",
+    "지역 현장에서 반복적으로 발생하는 생활·산업 문제를 발굴하고, 생성형 AI를 활용하여 현장에 즉시 적용 가능한 해결 서비스를 설계·구현하시오. 실제 사용자 관점의 문제 정의와 데이터 근거를 바탕으로, 지역사회에 실질적 변화를 가져오는 AI 솔루션을 제안한다.":"Hãy tìm ra các vấn đề đời sống, công nghiệp lặp lại tại địa phương và thiết kế, hiện thực hóa dịch vụ giải quyết áp dụng được ngay bằng AI tạo sinh. Dựa trên việc xác định vấn đề từ góc nhìn người dùng thực tế và căn cứ dữ liệu, đề xuất giải pháp AI mang lại thay đổi thiết thực cho cộng đồng.",
+    "공익·포용 AI · AI for Good":"AI vì cộng đồng · AI for Good",
+    "약자와의 동행, 안심도시, 디지털 헬스케어 등 사회적 가치를 높이는 공익 서비스를 주제로, 정보 취약계층·이주민·고령자 등 도움이 필요한 사용자를 위한 AI 솔루션을 개발하시오. 기술의 혜택이 모두에게 닿는 포용적 AI 서비스를 지향한다.":"Với chủ đề dịch vụ công ích nâng cao giá trị xã hội như đồng hành cùng người yếu thế, thành phố an toàn, chăm sóc sức khỏe số, hãy phát triển giải pháp AI cho những người cần giúp đỡ như nhóm yếu thế thông tin, người nhập cư, người cao tuổi. Hướng tới dịch vụ AI bao trùm, để lợi ích công nghệ đến với mọi người.",
+    "사용자 경험 혁신 · AI-Powered Experience":"Đổi mới trải nghiệm người dùng · AI-Powered Experience",
+    "개인화·대화형·음성 인터페이스 등 최신 AI 기술을 활용하여 일상 속 앱과 서비스의 사용자 경험을 획기적으로 개선하는 아이디어를 구현하시오. 사용자가 더 쉽고, 더 빠르고, 더 즐겁게 이용하도록 만드는 AI 기반 경험을 설계한다.":"Hãy hiện thực hóa ý tưởng cải thiện đột phá trải nghiệm người dùng của ứng dụng, dịch vụ thường ngày bằng công nghệ AI mới nhất như cá nhân hóa, hội thoại, giao diện giọng nói. Thiết kế trải nghiệm dựa trên AI giúp người dùng sử dụng dễ hơn, nhanh hơn và thú vị hơn.",
+    "교육·기후 참여형 AI · AI for Education & Climate":"AI giáo dục · khí hậu · AI for Education & Climate",
+    "AI를 활용한 체험·참여형 교육 콘텐츠 또는 기상·기후·환경 대응 서비스를 개발하시오. 학습자와 시민이 직접 참여하고 체험하며 배우는 과정을 통해, 지속가능한 미래와 교육 격차 해소에 기여하는 AI 서비스를 제안한다.":"Hãy phát triển nội dung giáo dục trải nghiệm, có sự tham gia bằng AI hoặc dịch vụ ứng phó thời tiết, khí hậu, môi trường. Thông qua quá trình người học và người dân trực tiếp tham gia và trải nghiệm, đề xuất dịch vụ AI góp phần cho tương lai bền vững và thu hẹp khoảng cách giáo dục.",
+    "상상해보세요":"Hãy tưởng tượng",
+    "“만약 AI로 (　　　　)을 없앨 수 있다면, 그 세상은 어떻게 달라질까요?”":"“Nếu AI có thể xóa bỏ (　　　　), thế giới sẽ thay đổi ra sao?”",
+    "빈칸을 채우는 순간, 여러분의 프로젝트가 시작됩니다.":"Khoảnh khắc bạn điền vào chỗ trống, dự án của bạn bắt đầu.",
+    "언어 장벽":"rào cản ngôn ngữ",
+    "의료공백":"khoảng trống y tế",
+    "지방소멸":"suy giảm dân số địa phương",
+    "가짜뉴스":"tin giả",
+    "전세사기":"lừa đảo tiền đặt cọc thuê nhà",
+    "운영 일정":"Lịch trình",
+    "1박 2일, 이렇게 ":"2 ngày 1 đêm, diễn ra ",
+    "진행돼요":"như thế này",
+    "아이스브레이킹부터 데모데이까지 — 쉼 없이 몰입하는 이틀의 여정입니다.":"Từ ice-breaking đến demo day — hành trình hai ngày đắm chìm không ngừng nghỉ.",
+    "1일차":"Ngày 1",
+    "2일차":"Ngày 2",
+    "등록 · 오리엔테이션 (개회)":"Đăng ký · Orientation (Khai mạc)",
+    "AI 특강 (생성형 AI 활용 기초)":"Bài giảng AI (Cơ bản về AI tạo sinh)",
+    "아이스브레이킹 · 팀 빌딩":"Ice-breaking · Team building",
+    "주제 선정 · 아이디어 회의 · 개발 시작":"Chọn chủ đề · Họp ý tưởng · Bắt đầu phát triển",
+    "멘토링 · 야간 개발":"Mentoring · Phát triển buổi tối",
+    "프로젝트 개발 · 마무리":"Phát triển dự án · Hoàn thiện",
+    "발표 자료 준비 (제출 마감)":"Chuẩn bị tài liệu thuyết trình (Hạn nộp)",
+    "팀별 발표 (데모데이)":"Thuyết trình theo đội (Demo Day)",
+    "심사 · 시상식 · 폐회":"Chấm giải · Trao giải · Bế mạc",
+    "당신의 아이디어를 깨워라":"Đánh thức ý tưởng của bạn",
+    "AI로, ":"Cùng AI, ",
+    "포효하라.":"hãy gầm vang.",
+    "AI로, 포효하라.":"Cùng AI, hãy gầm vang.",
+    "망설이지 마세요. 당신의 아이디어가 세상을 흔들 차례입니다.":"Đừng do dự. Đã đến lượt ý tưởng của bạn làm rung chuyển thế giới.",
+    "심사기준 · 시상":"Tiêu chí chấm · Trao giải",
+    "공정한 ":"Công bằng ",
+    "심사, 넉넉한 시상":"trong chấm giải, hào phóng trong trao thưởng",
+    "총 100점 기준의 심사표로 평가하며, 심사위원 평가 80% + 현장 상호평가 20%로 최종 순위를 정합니다.":"Chấm theo thang điểm 100, xếp hạng cuối cùng dựa trên 80% điểm giám khảo + 20% bình chọn tại chỗ.",
+    "① 문제 정의·필요성":"① Xác định vấn đề · Tính cần thiết",
+    "② AI 활용·기술 완성도":"② Ứng dụng AI · Hoàn thiện kỹ thuật",
+    "③ 창의성·혁신성":"③ Sáng tạo · Đổi mới",
+    "④ 사업성·시장성":"④ Tính khả thi kinh doanh · Thị trường",
+    "⑤ 실현 가능성·완성도":"⑤ Khả năng hiện thực · Hoàn thiện",
+    "⑥ 발표·협업":"⑥ Thuyết trình · Hợp tác",
+    "대상":"Giải Quán quân",
+    "최우수상":"Giải Nhất",
+    "우수상":"Giải Nhì",
+    "특별상":"Giải Đặc biệt",
+    "1팀 · 상장+상금":"1 đội · Giấy khen + Tiền thưởng",
+    "2팀 · 상장+상품":"2 đội · Giấy khen + Quà tặng",
+    "1~2팀 · 상장+기념품":"1~2 đội · Giấy khen + Quà lưu niệm",
+    "※ 상금·상품 규모는 운영 예산에 따라 추후 공지됩니다.":"※ Quy mô tiền thưởng và quà tặng sẽ được thông báo sau tùy theo ngân sách.",
+    "지금, 다리를 건너오세요":"Hãy bước qua cây cầu, ngay bây giờ",
+    "팀이 없어도 괜찮아요. 현장에서 팀을 만들어 드립니다. AI가 처음이어도, 지금 신청하세요!":"Không có đội cũng không sao. Chúng tôi sẽ ghép đội tại chỗ. Dù mới bắt đầu với AI, hãy đăng ký ngay!",
+    "참가비 무료 · 개발 공간 · Wi-Fi 제공":"Miễn phí tham gia · Không gian làm việc · Wi-Fi",
+    "AI 초심자 환영 · 멘토가 곁에서 도와줘요":"Chào đón người mới · Có mentor đồng hành",
+    "팀이 없어도 OK · 현장에서 팀 빌딩":"Không có đội cũng OK · Ghép đội tại chỗ",
+    "수상 팀 상장·상금 + 참가 전원 수료증":"Đội đoạt giải nhận giấy khen + tiền thưởng, tất cả người tham gia nhận chứng nhận",
+    "이름 *":"Họ tên *",
+    "이메일 *":"Email *",
+    "팀 이름 *":"Tên đội *",
+    "구분 *":"Phân loại *",
+    "선택하세요":"Vui lòng chọn",
+    "동아대 학생":"Sinh viên ĐH Dong-A",
+    "제주대 WFK IT봉사단원":"Tình nguyện viên IT WFK ĐH Jeju",
+    "관심 트랙":"Hạng mục quan tâm",
+    "아직 미정 / 현장에서 결정":"Chưa quyết định / Quyết định tại chỗ",
+    "트랙 1 · 지역 현장 문제 해결":"Hạng mục 1 · Giải quyết vấn đề địa phương",
+    "트랙 2 · 공익·포용 AI":"Hạng mục 2 · AI vì cộng đồng",
+    "트랙 3 · 사용자 경험 혁신":"Hạng mục 3 · Đổi mới trải nghiệm người dùng",
+    "트랙 4 · 교육·기후 참여형 AI":"Hạng mục 4 · AI giáo dục · khí hậu",
+    "하고 싶은 말 (선택)":"Lời nhắn (tùy chọn)",
+    "개인정보 수집·이용에 동의합니다":"Tôi đồng ý cho thu thập và sử dụng thông tin cá nhân",
+    "수집 항목":"Mục thu thập",
+    "이름, 이메일, 팀 이름, 구분, 관심 트랙, 하고 싶은 말":"Họ tên, email, tên đội, phân loại, hạng mục quan tâm, lời nhắn",
+    "수집 목적":"Mục đích thu thập",
+    "AI 브릿지 해커톤 참가 접수 및 행사 안내":"Tiếp nhận đăng ký và thông báo sự kiện AI Bridge Hackathon",
+    "보유 기간":"Thời gian lưu trữ",
+    "행사 종료 후 즉시 파기 (동의 철회 시 즉시 삭제)":"Hủy ngay sau khi sự kiện kết thúc (xóa ngay khi rút lại đồng ý)",
+    "보호책임자":"Người phụ trách",
+    "AI 브릿지 운영팀 · wl5839@naver.com":"Ban tổ chức AI Bridge · wl5839@naver.com",
+    "※ 동의를 거부할 권리가 있으며, 거부 시 참가 신청이 제한됩니다. 만 14세 이상만 신청할 수 있습니다.":"※ Bạn có quyền từ chối đồng ý, nhưng khi từ chối sẽ không thể đăng ký tham gia. Chỉ người từ 14 tuổi trở lên mới được đăng ký.",
+    "신청 완료하기":"Hoàn tất đăng ký",
+    "제출 시 개인정보 수집·이용에 동의하게 됩니다. 자세한 내용은 ":"Khi gửi, bạn đồng ý cho thu thập và sử dụng thông tin cá nhân. Xem chi tiết tại ",
+    "개인정보 처리방침":"Chính sách bảo mật",
+    "을 확인하세요.":".",
+    "신청이 접수되었습니다! 확인 메일을 곧 보내드릴게요.":"Đã tiếp nhận đăng ký! Chúng tôi sẽ gửi email xác nhận sớm.",
+    "자주 묻는 질문":"Câu hỏi thường gặp",
+    "궁금한 점이 ":"Bạn có ",
+    "있나요?":"thắc mắc?",
+    "AI를 잘 몰라도 참가할 수 있나요?":"Không rành AI có tham gia được không?",
+    "네! 초심자를 환영합니다. IT봉사단·현지 교수진 멘토가 개발 전 과정을 도와드리며, 1일차 AI 특강도 준비되어 있어요.":"Có! Chúng tôi chào đón người mới. Mentor từ đội tình nguyện IT và giảng viên bản địa sẽ hỗ trợ toàn bộ quá trình, và có bài giảng AI vào ngày 1.",
+    "팀이 없어도 신청할 수 있나요?":"Không có đội có đăng ký được không?",
+    "가능합니다. 1일차 팀 빌딩 시간에 동아대 학생과 봉사단원을 섞어 팀을 구성해 드립니다.":"Được. Vào giờ team building ngày 1, chúng tôi sẽ ghép sinh viên Dong-A và tình nguyện viên thành đội.",
+    "참가 비용이 있나요?":"Có mất phí tham gia không?",
+    "무료입니다. 식사·다과·개발 공간·Wi-Fi가 모두 제공됩니다.":"Miễn phí. Bữa ăn, đồ ăn nhẹ, không gian làm việc và Wi-Fi đều được cung cấp.",
+    "어떤 언어로 진행되나요?":"Sự kiện diễn ra bằng ngôn ngữ nào?",
+    "한국어와 영어를 병행하며, 통역 지원이 제공됩니다. 이 홈페이지도 우측 상단 버튼으로 언어를 바꿀 수 있어요.":"Song ngữ Hàn - Anh, có hỗ trợ phiên dịch. Bạn cũng có thể đổi ngôn ngữ trang này bằng nút ở góc trên bên phải.",
+    "주제가 정해져 있나요?":"Chủ đề có cố định không?",
+    "자유 주제입니다. 4개 트랙은 방향을 잡아주는 가이드일 뿐이며, AI를 활용한 아이디어라면 무엇이든 좋습니다.":"Chủ đề tự do. 4 hạng mục chỉ là hướng dẫn định hướng, mọi ý tưởng ứng dụng AI đều được chào đón.",
+    "결과물의 권리는 누구에게 있나요?":"Quyền đối với sản phẩm thuộc về ai?",
+    "지식재산권은 참가팀에 귀속됩니다. 다만 우수 결과물은 WFK IT봉사단 활동 홍보에 활용될 수 있습니다.":"Quyền sở hữu trí tuệ thuộc về đội tham gia. Tuy nhiên, các sản phẩm xuất sắc có thể được dùng để quảng bá hoạt động của đội tình nguyện IT WFK.",
+    "무엇을 준비해 가야 하나요?":"Cần chuẩn bị những gì?",
+    "개인 노트북과 충전기, 신분증을 지참해 주세요. AI 도구 계정은 미리 만들어 오시면 좋습니다.":"Hãy mang theo laptop cá nhân, sạc và giấy tờ tùy thân. Nên tạo sẵn tài khoản các công cụ AI.",
+    "동아대와 제주대 청년이 AI로 함께 만드는 내일. WFK IT봉사단이 함께합니다.":"Ngày mai được tạo nên bằng AI bởi thanh niên Dong-A và Jeju. Cùng đội tình nguyện IT WFK.",
+    "바로가기":"Liên kết nhanh",
+    "주최·문의":"Chủ trì · Liên hệ",
+    "주최: 제주대학교 WFK 운영팀":"Chủ trì: Ban điều hành WFK ĐH Quốc gia Jeju",
+    "주관: 제주대 WFK IT봉사단":"Tổ chức: Đội tình nguyện IT WFK ĐH Jeju",
+    "협력: 동아대학교":"Phối hợp: ĐH Dong-A",
+    "후원: NIA 한국지능정보사회진흥원":"Tài trợ: NIA Hàn Quốc",
+    "동아대 × 제주대 AI 해커톤":"Hackathon AI Dong-A × Jeju",
+    "AI 브릿지 해커톤(이하 '주최측')은 참가 신청자의 개인정보를 아래와 같이 처리합니다.":"AI Bridge Hackathon (sau đây gọi là 'Ban tổ chức') xử lý thông tin cá nhân của người đăng ký như sau.",
+    "1. 수집하는 개인정보 항목":"1. Thông tin cá nhân thu thập",
+    "이름, 이메일 주소, 팀 이름, 참가자 구분, 관심 트랙, 하고 싶은 말(선택).":"Họ tên, địa chỉ email, tên đội, phân loại người tham gia, hạng mục quan tâm, lời nhắn (tùy chọn).",
+    "2. 수집·이용 목적":"2. Mục đích thu thập và sử dụng",
+    "해커톤 참가 접수, 팀 구성, 행사 진행 및 안내 연락, 참가자 통계 목적으로만 이용합니다.":"Chỉ sử dụng cho mục đích tiếp nhận đăng ký, lập đội, vận hành sự kiện, liên lạc thông báo và thống kê người tham gia.",
+    "3. 보유 및 이용 기간":"3. Thời gian lưu trữ và sử dụng",
+    "수집일로부터 행사 종료 시까지 보유하며, 행사 종료 후 지체 없이 파기합니다. 신청자가 동의를 철회하거나 삭제를 요청하면 즉시 파기합니다.":"Lưu trữ từ ngày thu thập đến khi kết thúc sự kiện và hủy ngay sau đó. Nếu người đăng ký rút lại đồng ý hoặc yêu cầu xóa, dữ liệu sẽ được hủy ngay lập tức.",
+    "4. 제3자 제공 및 처리 위탁":"4. Cung cấp cho bên thứ ba và ủy thác xử lý",
+    "개인정보는 제3자에게 제공하지 않습니다. 다만 접수 데이터 저장을 위해 Google(Google Sheets/Apps Script) 서비스를 이용하며, 해당 데이터는 접수 목적 외로 사용되지 않습니다.":"Chúng tôi không cung cấp thông tin cá nhân cho bên thứ ba. Tuy nhiên, dữ liệu đăng ký được lưu bằng dịch vụ Google (Google Sheets/Apps Script) và không dùng cho mục đích nào khác ngoài tiếp nhận đăng ký.",
+    "5. 정보주체의 권리":"5. Quyền của chủ thể thông tin",
+    "신청자는 언제든지 자신의 개인정보에 대한 열람·정정·삭제·처리정지를 요청할 수 있으며, 아래 보호책임자에게 연락하면 지체 없이 조치합니다.":"Người đăng ký có thể yêu cầu xem, chỉnh sửa, xóa hoặc tạm dừng xử lý thông tin cá nhân bất cứ lúc nào; hãy liên hệ người phụ trách bên dưới, chúng tôi sẽ xử lý ngay.",
+    "6. 만 14세 미만 아동":"6. Trẻ em dưới 14 tuổi",
+    "본 행사는 만 14세 이상만 신청할 수 있습니다. 만 14세 미만의 개인정보는 수집하지 않습니다.":"Sự kiện chỉ dành cho người từ 14 tuổi trở lên. Chúng tôi không thu thập thông tin của trẻ dưới 14 tuổi.",
+    "7. 개인정보 보호책임자":"7. Người phụ trách bảo vệ dữ liệu",
+    "AI 브릿지 운영팀 · 문의: wl5839@naver.com":"Ban tổ chức AI Bridge · Liên hệ: wl5839@naver.com",
+    "본 방침은 2026년 7월 18일부터 적용됩니다.":"Chính sách này có hiệu lực từ ngày 18 tháng 7 năm 2026.",
+    "홍길동":"Nguyễn Văn A",
+    "팀 이름 (없으면 무소속)":"Tên đội (nếu không có, ghi 'Cá nhân')",
+    "풀어보고 싶은 문제나 아이디어가 있다면 적어주세요!":"Hãy chia sẻ vấn đề hoặc ý tưởng bạn muốn giải quyết!"
+  };
+
   let lang = localStorage.getItem('abh_lang') || 'ko';
+  function tr(l, koText, enText){
+    if(l === 'vi') return (VI[koText] !== undefined) ? VI[koText] : enText;
+    return (l === 'ko') ? koText : enText;
+  }
   function applyLang(l){
+    if(LANGS.indexOf(l) === -1) l = 'ko';
     lang = l;
     document.documentElement.lang = l;
     document.querySelectorAll('[data-ko][data-en]').forEach(el=>{
-      const v = el.getAttribute('data-'+l);
-      if(v!==null) el.textContent = v;
+      const v = tr(l, el.getAttribute('data-ko'), el.getAttribute('data-en'));
+      if(v !== null && v !== undefined) el.textContent = v;
     });
     document.querySelectorAll('[data-ko-ph][data-en-ph]').forEach(el=>{
-      el.setAttribute('placeholder', el.getAttribute('data-'+l+'-ph'));
+      const p = tr(l, el.getAttribute('data-ko-ph'), el.getAttribute('data-en-ph'));
+      if(p) el.setAttribute('placeholder', p);
     });
-    langLabel.textContent = (l==='ko') ? 'EN' : '한국어';
+    langSwitch.querySelectorAll('button').forEach(b=>{
+      b.classList.toggle('on', b.dataset.lang === l);
+      b.setAttribute('aria-pressed', b.dataset.lang === l ? 'true' : 'false');
+    });
     localStorage.setItem('abh_lang', l);
   }
-  langBtn.addEventListener('click', ()=> applyLang(lang==='ko' ? 'en' : 'ko'));
+  langSwitch.addEventListener('click', e=>{
+    const b = e.target.closest('button[data-lang]');
+    if(b) applyLang(b.dataset.lang);
+  });
   applyLang(lang);
 
   // 카운트다운 (실제 개최일로 EVENT_DATE 를 바꾸세요)
-  const EVENT_DATE = new Date('2026-08-22T09:00:00');
+  const EVENT_DATE = new Date('2026-08-15T09:00:00');
   function updateCountdown(){
     if(!document.getElementById('countdown')) return;
     let diff = Math.max(0, EVENT_DATE - new Date());
@@ -806,7 +1006,8 @@
       toast.scrollIntoView({behavior:'smooth', block:'center'});
       setTimeout(()=>{ form.reset(); toast.classList.remove('show'); btn.disabled = false; }, 5000);
     }catch(err){
-      alert(document.documentElement.lang==='en' ? 'Submission failed. Please try again.' : '전송에 실패했어요. 잠시 후 다시 시도해 주세요.');
+      const FAIL_MSG = { ko:'전송에 실패했어요. 잠시 후 다시 시도해 주세요.', en:'Submission failed. Please try again.', vi:'Gửi không thành công. Vui lòng thử lại sau.' };
+      alert(FAIL_MSG[document.documentElement.lang] || FAIL_MSG.ko);
       btn.disabled = false;
     }
   });
