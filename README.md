@@ -3,7 +3,42 @@
 > **48시간, 미래를 배포한다.**
 > 동아대학교 × 제주대학교 WFK IT봉사단이 함께하는 AI 해커톤 공식 홈페이지
 
+**WFK IT봉사단 지정과제 제출자료**
+
 🔗 **배포 링크** : https://stopwater47.github.io/AI_hackthon/
+
+---
+
+## 📁 폴더 구성
+
+| 폴더 | 내용 |
+|---|---|
+| **01_AI해커톤_홈페이지** | 메인 홈페이지 |
+| **02_행사기획안** | 행사 기획안 (웹페이지) |
+| **03_행사안내** | 참가자 안내 페이지 (웹페이지) |
+
+```
+AI_해커톤/
+├── 01_AI해커톤_홈페이지/
+│   ├── index.html          # 메인 홈페이지
+│   ├── favicon.svg
+│   ├── favicon.png
+│   ├── og-image.png        # 링크 공유용 미리보기 이미지
+│   └── tiger.jpg           # 배너 이미지
+│
+├── 02_행사기획안/
+│   ├── index.html          # 기획 발표 (7장)
+│   ├── shot-home.png       # 홈페이지 화면 캡처
+│   ├── favicon.svg
+│   └── og-image.png
+│
+└── 03_행사안내/
+    ├── index.html          # 행사 안내 발표 (8장, 3개 국어)
+    ├── favicon.svg
+    └── og-image.png
+```
+
+> 각 폴더의 `index.html` 을 브라우저로 열면 바로 실행됩니다. (설치·빌드 불필요)
 
 ---
 
@@ -30,22 +65,22 @@
 
 ### 1. 3개 국어 지원 (한국어 / English / Tiếng Việt)
 - 상단 버튼으로 페이지 전체 문구를 즉시 전환
-- 선택한 언어를 `localStorage`에 저장해 재방문 시에도 유지
+- 선택한 언어를 `localStorage` 에 저장해 재방문 시에도 유지
 - 현지(베트남) 참가자를 고려한 다국어 대응
 
 ### 2. 실시간 카운트다운
-- 개최일까지 남은 **일 / 시 / 분**을 실시간 계산해 표시
+- 개최일까지 남은 **일 / 시 / 분** 을 실시간으로 계산해 표시
 
 ### 3. 인터랙티브 심사 기준 차트
 - 100점 만점 배점을 **파이 차트**로 시각화
-- 차트 조각에 마우스를 올리면 해당 항목 텍스트가 강조되고 나머지는 흐려짐 (양방향 연동)
+- 조각에 마우스를 올리면 해당 항목이 강조되고 나머지는 흐려지는 **양방향 연동**
 
 ### 4. 참가 신청 폼 → 구글 시트 자동 연동
-- 별도 서버 없이 **Google Apps Script**를 거쳐 **Google Sheets**에 실시간 저장
+- 별도 서버 없이 **Google Apps Script** 를 거쳐 **Google Sheets** 에 실시간 저장
 - 필수 입력 검증 및 제출 완료 피드백 제공
 
 ### 5. 개인정보 수집·이용 동의
-- 필수 동의 체크박스 + 수집 항목·목적·보유기간 안내(접기/펼치기)
+- 필수 동의 체크박스 + 수집 항목·목적·보유기간 안내 (접기/펼치기)
 - **개인정보 처리방침 전문** 모달 제공 (7개 조항)
 
 ### 6. 그 외
@@ -56,7 +91,7 @@
 
 ## 🛠 기술 스택
 
-- **HTML5 / CSS3 / Vanilla JavaScript** (프레임워크·빌드 도구 없음)
+- **HTML5 / CSS3 / Vanilla JavaScript** — 프레임워크·빌드 도구 없음
 - **Google Apps Script + Google Sheets** — 신청 데이터 수집
 - **GitHub Pages** — 정적 호스팅
 - **Fonts** — Pretendard, Montserrat, Space Mono
@@ -69,54 +104,28 @@
 [ 방문자 브라우저 ]
         │   참가 신청 (POST)
         ▼
-[ GitHub Pages ]  ← HTML · CSS · JavaScript (정적 배포)
+[ GitHub Pages ]  ←  HTML · CSS · JavaScript (정적 배포)
         │
         ▼
-[ Google Apps Script ]  ← doPost() 웹 앱 (서버리스 API)
-        │  appendRow()
+[ Google Apps Script ]  ←  doPost() 웹 앱 (서버리스 API)
+        │   appendRow()
         ▼
-[ Google Sheets ]  ← 신청 데이터 자동 누적
+[ Google Sheets ]  ←  신청 데이터 자동 누적
 ```
 
-별도의 백엔드 서버나 DB 구축 없이, **정적 웹 + 서버리스**로 접수를 자동화했습니다.
+별도의 백엔드 서버나 DB 구축 없이 **정적 웹 + 서버리스** 조합으로 접수를 자동화했습니다.
 
 ---
 
-## 📁 폴더 구조
+## 🎬 발표자료 조작법
 
-```
-AI_해커톤/
-├── index.html              # 메인 홈페이지
-├── favicon.svg             # 파비콘 (주황)
-├── favicon.png
-├── og-image.png            # 링크 공유용 미리보기 이미지
-├── tiger.jpg               # 배너 이미지
-│
-├── PRE_행사안내/           # 행사 소개 발표자료 (8장, 3개 국어)
-│   └── index.html
-│
-└── PRE_기획/               # 제작 과정 발표자료 (7장)
-    ├── index.html
-    └── shot-home.png       # 홈페이지 스크린샷
-```
+`02_행사기획안` · `03_행사안내` 폴더의 웹페이지는 슬라이드 형식입니다.
 
-### 발표자료 조작법
-- `←` `→` 방향키 · 클릭 · 스페이스 : 슬라이드 이동
-- `F` : 전체화면
-- 우측 점(dot) 클릭으로 특정 장 바로가기
-
----
-
-## 🚀 실행 방법
-
-별도 설치나 빌드가 필요 없습니다.
-
-```bash
-# 저장소 클론
-git clone https://github.com/stopwater47/AI_hackthon.git
-
-# index.html 을 브라우저로 열기
-```
+| 조작 | 기능 |
+|---|---|
+| `←` `→` / 클릭 / `Space` | 슬라이드 이동 |
+| `F` | 전체화면 |
+| 우측 점(dot) 클릭 | 특정 장으로 바로 이동 |
 
 ---
 
@@ -124,9 +133,9 @@ git clone https://github.com/stopwater47/AI_hackthon.git
 
 | 수정 항목 | 위치 |
 |---|---|
-| 행사 날짜 | `index.html` 히어로 영역 + `EVENT_DATE` (카운트다운) |
-| 신청 폼 연동 주소 | `index.html` 의 `SHEET_ENDPOINT` |
-| 베트남어 문구 | `index.html` 하단 `const VI = { ... }` 사전 |
+| 행사 날짜 | `01_AI해커톤_홈페이지/index.html` — 히어로 영역 + `EVENT_DATE` |
+| 신청 폼 연동 주소 | `01_AI해커톤_홈페이지/index.html` — `SHEET_ENDPOINT` |
+| 베트남어 문구 | `01_AI해커톤_홈페이지/index.html` — `const VI = { ... }` 사전 |
 | 심사 배점 | 심사기준 섹션의 파이 차트 `stroke-dasharray` 값 |
 
 > 💡 베트남어 사전에 없는 문구는 자동으로 **영어**로 대체되어 빈칸이 생기지 않습니다.
@@ -138,7 +147,7 @@ git clone https://github.com/stopwater47/AI_hackthon.git
 - **수집 항목** : 이름, 이메일, 팀 이름, 참가자 구분, 관심 트랙, 하고 싶은 말(선택)
 - **수집 목적** : 해커톤 참가 접수 및 행사 안내
 - **보유 기간** : 행사 종료 후 즉시 파기 (동의 철회 시 즉시 삭제)
-- **만 14세 이상**만 신청 가능
+- **연령 제한** : 만 14세 이상만 신청 가능
 
 ---
 
