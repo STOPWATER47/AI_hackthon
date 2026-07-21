@@ -3,8 +3,6 @@
 > **48시간, 미래를 배포한다.**
 > 동아대학교 × 제주대학교 WFK IT봉사단이 함께하는 AI 해커톤 공식 홈페이지
 
-**WFK IT봉사단 지정과제 제출자료**
-
 🔗 **배포 링크** : https://stopwater47.github.io/AI_hackthon/
 
 ---
