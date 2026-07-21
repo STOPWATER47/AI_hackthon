@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AI 브릿지 해커톤" />
+<meta property="og:description" content="48시간, 미래를 배포한다." />
+<meta property="og:url" content="https://stopwater47.github.io/AI_hackthon/" />
+<meta property="og:image" content="https://stopwater47.github.io/AI_hackthon/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AI 브릿지 해커톤" />
+<meta name="twitter:description" content="48시간, 미래를 배포한다." />
+<meta name="twitter:image" content="https://stopwater47.github.io/AI_hackthon/og-image.png" />
+<title>AI Bridge Hackathon — 3분 발표</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{
+    --orange:#FF6B1A;
+    --orange-2:#FF8A3D;
+    --deep:#D94E00;
+    --ink:#0d0d0d;
+    --paper:#f4efe6;
+    --muted:#8a8378;
+    --sans:"Pretendard","Pretendard Variable","Noto Sans KR",-apple-system,sans-serif;
+    --mont:"Montserrat","Pretendard",sans-serif;
+    --mono:"Space Mono","Pretendard",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--sans);background:var(--ink);color:#fff;
+    overflow:hidden;-webkit-font-smoothing:antialiased;
+  }
+
+  /* 무대 */
+  .deck{position:fixed;inset:0}
+  .slide{
+    position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 8vw;opacity:0;visibility:hidden;transform:translateY(24px) scale(.99);
+    transition:opacity .5s ease,transform .5s ease,visibility .5s;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none}
+  .slide::before{
+    content:"";position:absolute;top:-18%;right:-12%;width:52vw;height:52vw;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,107,26,.22),transparent 62%);pointer-events:none;
+  }
+  .slide.dark-accent::before{top:auto;bottom:-22%;left:-14%;right:auto;
+    background:radial-gradient(circle,rgba(217,78,0,.28),transparent 62%);}
+
+  /* 공통 타이포 */
+  .eyebrow{font-family:var(--mono);font-size:clamp(.75rem,1.4vw,1rem);font-weight:700;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--orange);margin-bottom:26px;display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--orange)}
+  h1{font-family:var(--sans);font-weight:900;letter-spacing:-.02em;line-height:1.08}
+  h2{font-family:var(--sans);font-weight:900;letter-spacing:-.02em;line-height:1.12;
+    font-size:clamp(2rem,5.2vw,4rem);margin-bottom:26px}
+  .o{color:var(--orange)}
+  .lead{color:#c8c2b8;font-size:clamp(1.05rem,2vw,1.5rem);line-height:1.6;max-width:62ch}
+  .z{position:relative;z-index:1}
+
+  /* 1. 타이틀 */
+  .title-slide h1{font-size:clamp(3rem,9vw,7rem)}
+  .title-slide .dot{color:var(--orange)}
+  .title-slide .sub{font-family:var(--mono);color:var(--muted);letter-spacing:.14em;
+    text-transform:uppercase;font-size:clamp(.8rem,1.6vw,1.1rem);margin-top:6px}
+  .title-slide .tag{color:var(--orange);font-weight:900;font-size:clamp(1.1rem,2.4vw,1.7rem);margin-bottom:14px}
+  .title-slide .presented-by{position:absolute;top:0;right:0;font-family:var(--mono);color:var(--muted);letter-spacing:.12em;font-size:clamp(.72rem,1.1vw,.9rem)}
+  .title-slide .presented-by b{color:#fff;font-weight:700}
+  .meta-row{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:12px;margin-top:34px;margin-left:auto}
+  .meta-row span{border:2px solid #2c2c2a;border-radius:999px;padding:9px 18px;font-weight:700;
+    font-size:clamp(.85rem,1.5vw,1.05rem);display:inline-flex;align-items:center;gap:8px}
+  .meta-row .hot{background:var(--orange);border-color:var(--orange);color:#fff}
+  .meta-icon{width:1.1em;height:1.1em;flex:none}
+
+  /* 통계 */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,3vw,40px);margin-top:16px}
+  .stat b{display:block;font-family:var(--mont);font-weight:900;color:var(--orange);
+    font-size:clamp(2.4rem,7vw,5rem);line-height:1}
+  .stat span{color:#c8c2b8;font-weight:700;font-size:clamp(.85rem,1.5vw,1.15rem)}
+
+  /* 트랙 카드 */
+  .track-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,2vw,22px);margin-top:6px}
+  .tcard{border:2px solid #26241f;border-radius:16px;padding:clamp(18px,2.4vw,28px);
+    background:linear-gradient(150deg,#161616,#0f0f0f)}
+  .tcard .tg{font-family:var(--mont);font-weight:900;font-size:.72rem;letter-spacing:.14em;color:var(--orange);
+    display:block;margin-bottom:10px}
+  .tcard h3{font-size:clamp(1.05rem,2.2vw,1.6rem);font-weight:900;line-height:1.2}
+  .tcard p{color:#948d81;font-size:clamp(.82rem,1.4vw,1rem);margin-top:8px}
+
+  /* 일정 */
+  .days{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,36px);margin-top:4px}
+  .day h3{font-family:var(--mont);font-weight:900;color:var(--orange);font-size:1.3rem;margin-bottom:16px;
+    display:flex;align-items:baseline;gap:10px}
+  .day h3 small{font-family:var(--sans);color:#fff;font-size:1rem}
+  .day ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .day li{display:flex;gap:14px;font-size:clamp(.9rem,1.6vw,1.15rem);color:#d9d4cc}
+  .day li b{font-family:var(--mono);color:var(--orange-2);font-weight:700;white-space:nowrap;
+    font-size:clamp(.78rem,1.3vw,.95rem);min-width:96px}
+
+  /* 심사 */
+  .judge-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,64px);align-items:center}
+  .crit{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .crit li{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;
+    font-size:clamp(.95rem,1.7vw,1.25rem);font-weight:800;padding-bottom:12px;border-bottom:1px solid #232320}
+  .crit .sw{width:15px;height:15px;border-radius:5px}
+  .crit .pt{font-family:var(--mont);font-weight:900;color:var(--orange);font-size:1.05em}
+  .split{text-align:center}
+  .split .big{font-family:var(--mont);font-weight:900;color:var(--orange);
+    font-size:clamp(3.4rem,10vw,7rem);line-height:1}
+  .split .big small{font-size:.34em;color:#fff}
+  .split .desc{color:#c8c2b8;font-size:clamp(.95rem,1.6vw,1.2rem);margin-top:10px;line-height:1.6}
+  .split .awards{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .split .awards span{border:2px solid var(--orange);color:var(--orange-2);border-radius:999px;
+    padding:6px 14px;font-weight:800;font-size:.85rem}
+
+  /* 홈페이지 특징 */
+  .feat{list-style:none;display:flex;flex-direction:column;gap:20px;margin-top:8px}
+  .feat li{display:flex;gap:16px;align-items:flex-start;font-size:clamp(1rem,1.9vw,1.35rem)}
+  .feat .n{font-family:var(--mont);font-weight:900;color:var(--orange);font-size:1.4em;line-height:1;flex-shrink:0}
+  .feat b{font-weight:900}
+  .feat p{color:#948d81;font-size:.82em;margin-top:2px;font-weight:500}
+
+  /* 마무리 */
+  .end-slide{align-items:center;text-align:center}
+  .end-slide .roar{font-family:var(--sans);font-weight:900;color:var(--orange);
+    font-size:clamp(3rem,12vw,9rem);line-height:1;letter-spacing:-.02em}
+  .end-slide .roar .w{color:#fff}
+  .end-slide .cta{margin-top:34px;color:#c8c2b8;font-size:clamp(1rem,2vw,1.4rem)}
+  .end-slide .url{margin-top:26px;font-family:var(--mono);color:var(--orange-2);letter-spacing:.06em;
+    border:2px solid var(--orange);border-radius:999px;padding:12px 26px;display:inline-block;font-weight:700}
+  .qr-wrap{margin-top:34px;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+  .qr-card{background:rgba(255,255,255,.04);border:2px solid #2b2a27;border-radius:24px;padding:18px;
+    box-shadow:0 18px 50px rgba(0,0,0,.25);backdrop-filter:blur(4px)}
+  .qr-card img{display:block;width:180px;height:180px;border-radius:16px;background:#fff}
+  .qr-copy{text-align:left;max-width:280px}
+  .qr-copy .kicker{font-family:var(--mono);color:var(--orange);letter-spacing:.18em;font-size:.78rem;margin-bottom:10px}
+  .qr-copy b{display:block;font-size:clamp(1.05rem,2vw,1.4rem);margin-bottom:8px}
+  .qr-copy p{color:#c8c2b8;line-height:1.6;font-size:clamp(.9rem,1.4vw,1.05rem)}
+
+  /* HUD: 진행바 · 페이지 · 화살표 */
+  .progress{position:fixed;top:0;left:0;height:4px;background:var(--orange);z-index:10;
+    transition:width .4s ease;box-shadow:0 0 12px rgba(255,107,26,.6)}
+  .pager{position:fixed;bottom:22px;right:28px;z-index:10;font-family:var(--mono);
+    color:var(--muted);font-size:.9rem;letter-spacing:.1em}
+  .pager b{color:#fff}
+  .brand-tag{position:fixed;bottom:22px;left:28px;z-index:10;font-family:var(--mont);font-weight:900;
+    color:var(--muted);letter-spacing:.04em;font-size:.85rem}
+  .brand-tag .o{color:var(--orange)}
+  .nav-arrow{position:fixed;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,.06);
+    border:2px solid #2c2c2a;color:#fff;width:48px;height:48px;border-radius:50%;cursor:pointer;
+    display:grid;place-items:center;transition:.15s;backdrop-filter:blur(4px)}
+  .nav-arrow:hover{background:var(--orange);border-color:var(--orange)}
+  .nav-arrow svg{width:22px;height:22px}
+  .nav-arrow.prev{left:22px}.nav-arrow.next{right:22px}
+  .lang-switch{position:fixed;top:20px;right:24px;z-index:20;display:inline-grid;grid-template-columns:repeat(3,1fr);
+    border:2px solid #3a3a3a;border-radius:999px;overflow:hidden;font-family:var(--mont);backdrop-filter:blur(4px)}
+  .lang-switch button{background:rgba(255,255,255,.04);border:none;font-family:inherit;font-weight:800;font-size:.7rem;
+    padding:7px 10px;cursor:pointer;color:#c8c2b8;transition:.12s;white-space:nowrap;text-align:center}
+  .lang-switch button + button{border-left:2px solid #3a3a3a}
+  .lang-switch button:hover{background:rgba(255,107,26,.3);color:#fff}
+  .lang-switch button.on{background:var(--orange);color:#fff}
+  .hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:10;
+    font-family:var(--mono);color:#5a564e;font-size:.78rem;letter-spacing:.08em;
+    transition:opacity .5s;pointer-events:none}
+  .dots{position:fixed;top:50%;right:20px;transform:translateY(-50%);z-index:10;
+    display:flex;flex-direction:column;gap:10px}
+  .dots button{width:9px;height:9px;border-radius:50%;border:none;background:#3a362f;cursor:pointer;padding:0;transition:.2s}
+  .dots button.on{background:var(--orange);transform:scale(1.35)}
+
+  @media(max-width:820px){
+    .stat-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+    .track-grid,.days,.judge-wrap{grid-template-columns:1fr}
+    .title-slide .presented-by{position:static;margin-top:20px;text-align:right}
+    .nav-arrow,.dots{display:none}
+    .lang-switch{top:12px;right:12px;font-size:.66rem}
+    .slide{padding:8vh 7vw}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. 타이틀 -->
+  <section class="slide title-slide active">
+    <div class="z">
+        <div class="eyebrow">DONG-A × JEJU NAT'L · WFK</div>
+        <p class="tag" data-i18n="s1tag">48시간, 미래를 배포한다.</p>
+        <h1 data-i18n="s1title"><span class="o">AI 브릿지</span><br>해커톤<span class="dot">.</span></h1>
+        <p class="sub" data-i18n="s1sub">The future, shipped in 48 hours.</p>
+        <div class="meta-row">
+        <span><svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.25 7-12a7 7 0 1 0-14 0c0 6.75 7 12 7 12Z"/><circle cx="12" cy="9" r="2.25"/></svg><span data-i18n="s1loc">다낭, 베트남</span></span>
+        <span><svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v3M17.25 3v3M3.75 9.75h16.5M5.25 5.25h13.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-12a1.5 1.5 0 0 1 1.5-1.5Z"/></svg>2026.08.15–16</span>
+        <span><svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.5 10.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM16.5 10.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM7.5 12C4.46 12 2 14.46 2 17.5V19h11v-1.5C13 14.46 10.54 12 7.5 12ZM16.5 12c-.9 0-1.75.22-2.5.6a6.45 6.45 0 0 1 1.5 4.15V19H22v-1.5c0-3.04-2.46-5.5-5.5-5.5Z"/></svg><span data-i18n="s1who">동아대 × 제주대 WFK IT봉사단</span></span>
+        </div>
+    </div>
+  </section>
+
+  <!-- 2. 왜 (배경) -->
+  <section class="slide">
+    <div class="z">
+      <div class="eyebrow" data-i18n="s2eb">WHY — 왜 하는가</div>
+      <h2 data-i18n="s2title">기술과 우정,<br>두 대학을 잇는 <span class="o">다리</span></h2>
+      <p class="lead" data-i18n="s2lead">동아대 학생과 제주대 WFK IT봉사단이 <b>한 팀</b>을 이뤄,
+      생성형 AI로 지역사회의 실제 문제를 함께 해결합니다.
+      실현하기 전에, <span class="o">가치를 먼저 증명</span>하는 1박 2일.</p>
+    </div>
+  </section>
+
+  <!-- 3. 통계 -->
+  <section class="slide dark-accent">
+    <div class="z">
+      <div class="eyebrow" data-i18n="s3eb">AT A GLANCE — 한눈에</div>
+      <h2 data-i18n="s3title">이렇게 진행돼요</h2>
+      <div class="stat-grid">
+        <div class="stat"><b>2</b><span data-i18n="s3st1">일간 집중 개발</span></div>
+        <div class="stat"><b>4</b><span data-i18n="s3st2">개 프로젝트 트랙</span></div>
+        <div class="stat"><b>6</b><span data-i18n="s3st3">개 참가 팀</span></div>
+        <div class="stat"><b>2</b><span data-i18n="s3st4">개 대학 협력</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 트랙 -->
+  <section class="slide">
+    <div class="z">
+      <div class="eyebrow" data-i18n="s4eb">TRACKS — 4개의 주제</div>
+      <h2 data-i18n="s4title">자유 주제, <span class="o">AI</span>만 있다면 OK</h2>
+      <div class="track-grid">
+        <div class="tcard"><span class="tg">TRACK 1</span><h3 data-i18n="s4t1h">지역 현장 문제 해결</h3><p data-i18n="s4t1p">Local Impact AI — 현장에 바로 쓰는 해결책</p></div>
+        <div class="tcard"><span class="tg">TRACK 2</span><h3 data-i18n="s4t2h">공익·포용 AI</h3><p data-i18n="s4t2p">AI for Good — 모두에게 닿는 기술</p></div>
+        <div class="tcard"><span class="tg">TRACK 3</span><h3 data-i18n="s4t3h">사용자 경험 혁신</h3><p data-i18n="s4t3p">AI-Powered Experience — 더 쉽고 즐겁게</p></div>
+        <div class="tcard"><span class="tg">TRACK 4</span><h3 data-i18n="s4t4h">교육·기후 참여형 AI</h3><p data-i18n="s4t4p">Education & Climate — 지속가능한 미래</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 일정 -->
+  <section class="slide dark-accent">
+    <div class="z">
+      <div class="eyebrow" data-i18n="s5eb">SCHEDULE — 1박 2일</div>
+      <h2 data-i18n="s5title">쉼 없이 몰입하는 <span class="o">이틀</span></h2>
+      <div class="days">
+        <div class="day">
+          <h3>DAY 1 <small data-i18n="s5d1">개발의 시작</small></h3>
+          <ul>
+            <li><b>09:00</b> <span data-i18n="s5a1">등록 · 오리엔테이션</span></li>
+            <li><b>10:00</b> <span data-i18n="s5a2">AI 특강 (생성형 AI 기초)</span></li>
+            <li><b>11:00</b> <span data-i18n="s5a3">아이스브레이킹 · 팀 빌딩</span></li>
+            <li><b>13:00</b> <span data-i18n="s5a4">아이디어 회의 · 개발 시작</span></li>
+            <li><b>19:00</b> <span data-i18n="s5a5">멘토링 · 야간 개발</span></li>
+          </ul>
+        </div>
+        <div class="day">
+          <h3>DAY 2 <small data-i18n="s5d2">데모데이</small></h3>
+          <ul>
+            <li><b>09:00</b> <span data-i18n="s5b1">개발 · 마무리</span></li>
+            <li><b>13:00</b> <span data-i18n="s5b2">발표 자료 준비 (제출)</span></li>
+            <li><b>14:00</b> <span data-i18n="s5b3">팀별 발표 (데모데이)</span></li>
+            <li><b>16:00</b> <span data-i18n="s5b4">심사 · 시상 · 폐회</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 심사 -->
+  <section class="slide">
+    <div class="z">
+      <div class="eyebrow" data-i18n="s6eb">JUDGING — 공정한 심사</div>
+      <h2 data-i18n="s6title">총 <span class="o">100점</span>, 넉넉한 시상</h2>
+      <div class="judge-wrap">
+        <ul class="crit">
+          <li><span class="sw" style="background:#FF6B1A"></span><span data-i18n="s6c1">① 문제 정의·필요성</span><span class="pt">20</span></li>
+          <li><span class="sw" style="background:#D94E00"></span><span data-i18n="s6c2">② AI 활용·기술 완성도</span><span class="pt">20</span></li>
+          <li><span class="sw" style="background:#f4efe6"></span><span data-i18n="s6c3">③ 창의성·혁신성</span><span class="pt">15</span></li>
+          <li><span class="sw" style="background:#FFB27A"></span><span data-i18n="s6c4">④ 사업성·시장성</span><span class="pt">20</span></li>
+          <li><span class="sw" style="background:#8A5A3A"></span><span data-i18n="s6c5">⑤ 실현 가능성·완성도</span><span class="pt">15</span></li>
+          <li><span class="sw" style="background:#6b6660"></span><span data-i18n="s6c6">⑥ 발표·협업</span><span class="pt">10</span></li>
+        </ul>
+        <div class="split">
+          <div class="big">80<small>%</small></div>
+          <p class="desc" data-i18n="s6desc">심사위원 평가 <b style="color:#fff">80%</b><br>+ 현장 상호평가 20%</p>
+          <div class="awards"><span data-i18n="s6aw1">🏆 대상</span><span data-i18n="s6aw2">최우수상</span><span data-i18n="s6aw3">우수상</span><span data-i18n="s6aw4">특별상</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 홈페이지 -->
+  <section class="slide dark-accent">
+    <div class="z">
+      <div class="eyebrow" data-i18n="s7eb">THE WEBSITE — 우리가 만든 것</div>
+      <h2 data-i18n="s7title">신청부터 안내까지, <span class="o">한 페이지</span></h2>
+      <ul class="feat">
+        <li><span class="n">01</span><div><b data-i18n="s7f1b">실시간 참가 신청 폼</b><p data-i18n="s7f1p">구글 시트(Apps Script) 자동 연동 — 신청 즉시 접수</p></div></li>
+        <li><span class="n">02</span><div><b data-i18n="s7f2b">한국어 · English · Tiếng Việt 전환</b><p data-i18n="s7f2p">버튼 하나로 전체 페이지 번역 (베트남 현지 대응)</p></div></li>
+        <li><span class="n">03</span><div><b data-i18n="s7f3b">인터랙티브 심사 차트 & 카운트다운</b><p data-i18n="s7f3p">파이 차트 강조 애니메이션, D-day 실시간 표시</p></div></li>
+        <li><span class="n">04</span><div><b data-i18n="s7f4b">개인정보 수집·이용 동의</b><p data-i18n="s7f4p">동의 절차 · 처리방침까지 갖춘 실전형 폼</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8. 마무리 -->
+  <section class="slide end-slide">
+    <div class="z">
+      <div class="eyebrow" style="justify-content:center" data-i18n="s8eb">UNLEASH YOUR IDEA</div>
+      <div class="roar" data-i18n="s8roar">AI로, <span class="w">포효하라.</span></div>
+      <p class="cta" data-i18n="s8cta">망설이지 마세요. 당신의 아이디어가 세상을 흔들 차례입니다.</p>
+      <div class="url" data-i18n="s8url">지금, 참가 신청하기 →</div>
+    </div>
+  </section>
+
+</div>
+
+<!-- 언어 전환 -->
+<div class="lang-switch" id="langSwitch">
+  <button type="button" data-lang="ko">한국어</button>
+  <button type="button" data-lang="en">English</button>
+  <button type="button" data-lang="vi">Việt</button>
+</div>
+
+<!-- HUD -->
+<button class="nav-arrow prev" id="prev" aria-label="이전"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg></button>
+<button class="nav-arrow next" id="next" aria-label="다음"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg></button>
+
+<div class="dots" id="dots"></div>
+<div class="brand-tag"><span class="o">AI</span> Bridge Hackathon</div>
+<div class="pager"><b id="cur">1</b> / <span id="total">8</span></div>
+<div class="hint" id="hint">← → 방향키 · 클릭 · 스페이스로 이동 · F 전체화면</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let i = 0;
+
+  const progress = document.getElementById('progress');
+  const cur = document.getElementById('cur');
+  const hint = document.getElementById('hint');
+  document.getElementById('total').textContent = total;
+
+  // 도트 인디케이터
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach((_, idx)=>{
+    const b = document.createElement('button');
+    b.addEventListener('click', ()=> go(idx));
+    dotsWrap.appendChild(b);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function go(n){
+    i = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s, idx)=> s.classList.toggle('active', idx===i));
+    dots.forEach((d, idx)=> d.classList.toggle('on', idx===i));
+    progress.style.width = ((i+1)/total*100) + '%';
+    cur.textContent = i+1;
+  }
+  const nextS = ()=> go(i+1);
+  const prevS = ()=> go(i-1);
+
+  document.getElementById('next').addEventListener('click', nextS);
+  document.getElementById('prev').addEventListener('click', prevS);
+
+  document.addEventListener('keydown', e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){ e.preventDefault(); nextS(); }
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prevS(); }
+    else if(e.key==='Home'){ go(0); }
+    else if(e.key==='End'){ go(total-1); }
+    else if(e.key==='f' || e.key==='F'){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  // 클릭으로 다음 (버튼/도트 제외)
+  document.getElementById('deck').addEventListener('click', e=>{
+    if(e.target.closest('.nav-arrow, .dots')) return;
+    nextS();
+  });
+
+  // 힌트 4초 뒤 사라짐
+  setTimeout(()=> hint.style.opacity = '0', 4000);
+
+  go(0);
+
+  const titleSlide = document.querySelector('.title-slide .z');
+  if (titleSlide && !titleSlide.querySelector('.presented-by')) {
+    const presentedBy = document.createElement('p');
+    presentedBy.className = 'presented-by';
+    presentedBy.innerHTML = 'PROJECT BY <b>정지수</b>';
+    titleSlide.appendChild(presentedBy);
+  }
+
+  const endSlide = document.querySelector('.end-slide .z');
+  if (endSlide && !document.getElementById('qr-wrap')) {
+    const qrWrap = document.createElement('div');
+    qrWrap.className = 'qr-wrap';
+    qrWrap.id = 'qr-wrap';
+    qrWrap.innerHTML = `
+      <div class="qr-card">
+        <img
+          src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&margin=12&data=https%3A%2F%2Fstopwater47.github.io%2FAI_hackthon%2F"
+          alt="참가신청 홈페이지 QR 코드"
+        />
+      </div>
+      <div class="qr-copy">
+        <div class="kicker">SCAN TO APPLY</div>
+        <b data-i18n="qrTitle">참가신청 페이지</b>
+        <p data-i18n="qrDesc">카메라로 찍으면 바로 신청 페이지로 이동합니다.</p>
+      </div>
+    `;
+    endSlide.appendChild(qrWrap);
+  }
+
+  // ===== 3개 국어 전환 =====
+  const I18N = {
+    en: {
+      s1tag:"The future, shipped in 48 hours.",
+      s1title:"<span class='o'>AI Bridge</span><br>Hackathon<span class='dot'>.</span>",
+      s1sub:"48 hours to build what comes next.",
+      s1loc:"Đà Nẵng, Vietnam",
+      s1who:"Dong-A × Jeju Nat'l WFK IT Volunteers",
+      s2eb:"WHY — THE PURPOSE",
+      s2title:"A <span class='o'>bridge</span><br>of tech and friendship",
+      s2lead:"Dong-A students and Jeju Nat'l WFK IT volunteers form <b>one team</b> to solve real community problems with generative AI. Two days to <span class='o'>prove the value first</span>.",
+      s3eb:"AT A GLANCE",
+      s3title:"How it runs",
+      s3st1:"days of building", s3st2:"project tracks", s3st3:"participating teams", s3st4:"universities united",
+      s4eb:"TRACKS — 4 THEMES",
+      s4title:"Free theme — just bring <span class='o'>AI</span>",
+      s4t1h:"Local problem solving", s4t1p:"Local Impact AI — solutions ready for the field",
+      s4t2h:"AI for public good", s4t2p:"AI for Good — tech that reaches everyone",
+      s4t3h:"User experience innovation", s4t3p:"AI-Powered Experience — easier and more delightful",
+      s4t4h:"AI for education & climate", s4t4p:"Education & Climate — a sustainable future",
+      s5eb:"SCHEDULE — 2 DAYS",
+      s5title:"<span class='o'>Two days</span> of nonstop focus",
+      s5d1:"Build begins", s5d2:"Demo Day",
+      s5a1:"Registration · Orientation", s5a2:"AI keynote (generative AI basics)", s5a3:"Ice-breaking · Team building",
+      s5a4:"Ideation · Development starts", s5a5:"Mentoring · Night coding",
+      s5b1:"Development · Finalizing", s5b2:"Prepare slides (submission)", s5b3:"Team presentations (Demo Day)", s5b4:"Judging · Awards · Closing",
+      s6eb:"JUDGING — FAIR & OPEN",
+      s6title:"<span class='o'>100 points</span>, generous awards",
+      s6c1:"① Problem & Need", s6c2:"② AI Use & Tech", s6c3:"③ Creativity", s6c4:"④ Business Viability", s6c5:"⑤ Feasibility", s6c6:"⑥ Pitch & Teamwork",
+      s6desc:"Judges <b style='color:#fff'>80%</b><br>+ on-site peer vote 20%",
+      s6aw1:"🏆 Grand Prize", s6aw2:"Excellence", s6aw3:"Merit", s6aw4:"Special",
+      s7eb:"THE WEBSITE",
+      s7title:"From info to signup, <span class='o'>one page</span>",
+      s7f1b:"Live registration form", s7f1p:"Auto-linked to Google Sheets (Apps Script) — instant intake",
+      s7f2b:"한국어 · English · Tiếng Việt", s7f2p:"One button translates the whole page (for local participants)",
+      s7f3b:"Interactive judging chart & countdown", s7f3p:"Pie-chart highlight animation, live D-day timer",
+      s7f4b:"Privacy consent built in", s7f4p:"Consent flow and privacy policy included",
+      s8eb:"UNLEASH YOUR IDEA",
+      s8roar:"Roar <span class='w'>with AI.</span>",
+      s8cta:"Don't hesitate. It's your idea's turn to shake the world.",
+      s8url:"Register now →",
+      qrTitle:"Registration page", qrDesc:"Scan with your camera to open the signup page."
+    },
+    vi: {
+      s1tag:"48 giờ, triển khai tương lai.",
+      s1title:"<span class='o'>AI Bridge</span><br>Hackathon<span class='dot'>.</span>",
+      s1sub:"48 giờ để kiến tạo điều tiếp theo.",
+      s1loc:"Đà Nẵng, Việt Nam",
+      s1who:"Dong-A × Đội tình nguyện IT WFK Jeju",
+      s2eb:"WHY — MỤC ĐÍCH",
+      s2title:"<span class='o'>Cầu nối</span><br>công nghệ và tình bạn",
+      s2lead:"Sinh viên Dong-A và tình nguyện viên IT WFK Jeju lập <b>một đội</b>, cùng giải quyết vấn đề thực tế của cộng đồng bằng AI tạo sinh. Hai ngày để <span class='o'>chứng minh giá trị trước</span>.",
+      s3eb:"TỔNG QUAN",
+      s3title:"Diễn ra như thế nào",
+      s3st1:"ngày phát triển", s3st2:"hạng mục dự án", s3st3:"đội tham gia", s3st4:"trường đại học",
+      s4eb:"HẠNG MỤC — 4 CHỦ ĐỀ",
+      s4title:"Chủ đề tự do — chỉ cần có <span class='o'>AI</span>",
+      s4t1h:"Giải quyết vấn đề địa phương", s4t1p:"Local Impact AI — giải pháp dùng được ngay",
+      s4t2h:"AI vì cộng đồng", s4t2p:"AI for Good — công nghệ đến với mọi người",
+      s4t3h:"Đổi mới trải nghiệm người dùng", s4t3p:"AI-Powered Experience — dễ hơn và thú vị hơn",
+      s4t4h:"AI giáo dục · khí hậu", s4t4p:"Education & Climate — tương lai bền vững",
+      s5eb:"LỊCH TRÌNH — 2 NGÀY",
+      s5title:"<span class='o'>Hai ngày</span> tập trung không ngừng",
+      s5d1:"Bắt đầu phát triển", s5d2:"Demo Day",
+      s5a1:"Đăng ký · Orientation", s5a2:"Bài giảng AI (cơ bản về AI tạo sinh)", s5a3:"Ice-breaking · Lập đội",
+      s5a4:"Họp ý tưởng · Bắt đầu phát triển", s5a5:"Mentoring · Phát triển buổi tối",
+      s5b1:"Phát triển · Hoàn thiện", s5b2:"Chuẩn bị thuyết trình (nộp bài)", s5b3:"Thuyết trình theo đội (Demo Day)", s5b4:"Chấm giải · Trao giải · Bế mạc",
+      s6eb:"CHẤM ĐIỂM — CÔNG BẰNG",
+      s6title:"<span class='o'>100 điểm</span>, giải thưởng hào phóng",
+      s6c1:"① Xác định vấn đề", s6c2:"② Ứng dụng AI · Kỹ thuật", s6c3:"③ Sáng tạo · Đổi mới", s6c4:"④ Khả thi kinh doanh", s6c5:"⑤ Khả năng hiện thực", s6c6:"⑥ Thuyết trình · Hợp tác",
+      s6desc:"Giám khảo <b style='color:#fff'>80%</b><br>+ bình chọn tại chỗ 20%",
+      s6aw1:"🏆 Quán quân", s6aw2:"Giải Nhất", s6aw3:"Giải Nhì", s6aw4:"Giải Đặc biệt",
+      s7eb:"TRANG WEB",
+      s7title:"Từ thông tin đến đăng ký, <span class='o'>một trang</span>",
+      s7f1b:"Form đăng ký trực tiếp", s7f1p:"Tự động liên kết Google Sheets (Apps Script) — nhận đăng ký tức thì",
+      s7f2b:"한국어 · English · Tiếng Việt", s7f2p:"Một nút dịch toàn bộ trang (hỗ trợ người tham gia bản địa)",
+      s7f3b:"Biểu đồ chấm điểm & đếm ngược", s7f3p:"Hiệu ứng làm nổi biểu đồ tròn, đồng hồ đếm ngược",
+      s7f4b:"Đồng ý thu thập thông tin", s7f4p:"Có quy trình đồng ý và chính sách bảo mật",
+      s8eb:"ĐÁNH THỨC Ý TƯỞNG",
+      s8roar:"Gầm vang <span class='w'>cùng AI.</span>",
+      s8cta:"Đừng do dự. Đã đến lượt ý tưởng của bạn làm rung chuyển thế giới.",
+      s8url:"Đăng ký ngay →",
+      qrTitle:"Trang đăng ký", qrDesc:"Quét bằng camera để mở trang đăng ký."
+    }
+  };
+
+  const langSwitch = document.getElementById('langSwitch');
+  const LANGS = ['ko','en','vi'];
+  const KO = {};
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ KO[el.dataset.i18n] = el.innerHTML; });
+
+  function applyLang(l){
+    if(LANGS.indexOf(l) === -1) l = 'ko';
+    document.documentElement.lang = l;
+    const dict = (l === 'ko') ? KO : I18N[l];
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const v = dict[el.dataset.i18n];
+      if(v !== undefined) el.innerHTML = v;
+      else if(KO[el.dataset.i18n] !== undefined) el.innerHTML = KO[el.dataset.i18n];
+    });
+    langSwitch.querySelectorAll('button').forEach(b=>{
+      b.classList.toggle('on', b.dataset.lang === l);
+      b.setAttribute('aria-pressed', b.dataset.lang === l ? 'true' : 'false');
+    });
+    localStorage.setItem('abh_pre_lang', l);
+  }
+  langSwitch.addEventListener('click', e=>{
+    const b = e.target.closest('button[data-lang]');
+    if(b) applyLang(b.dataset.lang);
+  });
+  applyLang(localStorage.getItem('abh_pre_lang') || 'ko');
+</script>
+</body>
+</html>
